@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Priority Pilot</title>
+    <meta
+      name="description"
+      content="Priority Pilot helps small teams rank incoming work by impact, urgency, and effort so the next best action is always obvious."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-orb orb-one"></div>
+    <div class="background-orb orb-two"></div>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Hackathon problem statement</p>
+          <h1>Teams lose hours deciding what to do next when every task feels urgent.</h1>
+          <p class="lede">
+            Priority Pilot turns scattered work into a ranked plan. It scores tasks by impact,
+            urgency, and effort, then recommends the next best action with a clear reason.
+          </p>
+          <div class="hero-actions">
+            <button id="jump-to-builder" class="primary-button">Build the plan</button>
+            <button id="load-demo" class="secondary-button">Load demo tasks</button>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="panel-header">
+            <span class="panel-label">Today’s recommendation</span>
+            <span id="plan-count" class="panel-pill">0 tasks</span>
+          </div>
+          <div class="recommendation-card">
+            <div class="recommendation-score">
+              <span class="score-value" id="top-score">0</span>
+              <span class="score-label">priority score</span>
+            </div>
+            <div>
+              <h2 id="top-title">Add a task to see the recommendation</h2>
+              <p id="top-why">
+                The strongest task will appear here once the board has data.
+              </p>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <article>
+              <strong id="high-priority-count">0</strong>
+              <span>high priority</span>
+            </article>
+            <article>
+              <strong id="focus-hours">0h</strong>
+              <span>estimated focus</span>
+            </article>
+            <article>
+              <strong id="balanced-count">0</strong>
+              <span>balanced tasks</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" id="builder">
+        <div class="panel section-intro">
+          <p class="eyebrow">Solution</p>
+          <h2>Score the work, then ship the right thing first.</h2>
+          <p>
+            Adjust the weighting model for your team, add tasks, and let the board sort the queue
+            into an actionable plan.
+          </p>
+        </div>
+
+        <div class="panel controls">
+          <div class="control-grid">
+            <label>
+              <span>Impact weight</span>
+              <input id="impact-weight" type="range" min="1" max="5" value="4" />
+              <strong id="impact-weight-value">4</strong>
+            </label>
+            <label>
+              <span>Urgency weight</span>
+              <input id="urgency-weight" type="range" min="1" max="5" value="3" />
+              <strong id="urgency-weight-value">3</strong>
+            </label>
+            <label>
+              <span>Effort penalty</span>
+              <input id="effort-weight" type="range" min="1" max="5" value="2" />
+              <strong id="effort-weight-value">2</strong>
+            </label>
+          </div>
+        </div>
+
+        <form id="task-form" class="panel task-form">
+          <div class="form-row title-row">
+            <label>
+              <span>Task title</span>
+              <input id="task-title" type="text" placeholder="Example: fix broken checkout flow" required />
+            </label>
+            <label>
+              <span>Owner</span>
+              <input id="task-owner" type="text" placeholder="Team or person" />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              <span>Impact</span>
+              <input id="task-impact" type="range" min="1" max="5" value="3" />
+            </label>
+            <label>
+              <span>Urgency</span>
+              <input id="task-urgency" type="range" min="1" max="5" value="3" />
+            </label>
+            <label>
+              <span>Effort</span>
+              <input id="task-effort" type="range" min="1" max="5" value="3" />
+            </label>
+          </div>
+          <div class="form-footer">
+            <p id="task-preview">Preview score: 0</p>
+            <button type="submit" class="primary-button">Add task</button>
+          </div>
+        </form>
+
+        <div class="board-layout">
+          <section class="panel task-list-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Task board</p>
+                <h3>Ranked backlog</h3>
+              </div>
+              <button id="clear-board" class="ghost-button">Reset</button>
+            </div>
+            <div id="task-list" class="task-list"></div>
+          </section>
+
+          <aside class="panel insight-panel">
+            <div>
+              <p class="eyebrow">Decision lens</p>
+              <h3>Why the recommendation wins</h3>
+            </div>
+            <div id="insights" class="insights"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <template id="task-template">
+      <article class="task-card">
+        <div class="task-card-top">
+          <div>
+            <p class="task-owner"></p>
+            <h4 class="task-title"></h4>
+          </div>
+          <span class="task-score"></span>
+        </div>
+        <p class="task-summary"></p>
+        <div class="task-metrics">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
